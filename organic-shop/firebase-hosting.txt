@@ -218,3 +218,9 @@ i  hosting[my-firebase-demo-ade3e]: releasing new version...
 Project Console: https://console.firebase.google.com/project/my-firebase-demo-ade3e/overview
 Hosting URL: https://my-firebase-demo-ade3e.web.app
 PS F:\AngularTestApp\My-Ecommerce-Portal\organic-shop>
+
+-----------------------------------------------------------------------------------------------------
+
+after "ng build/ npm run build", 
+> copy the index.html file and paste it outside of the "organic-shop" directory.
+> manually modify the index.html file and change the file references.
