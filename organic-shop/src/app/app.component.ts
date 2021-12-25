@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
+import { AuthService } from './service/auth.service';
+//import { AngularFireAuth } from '@angular/fire/compat/auth';
+//import { AngularFireDatabase } from '@angular/fire/compat/database';
+//import * as firebase from 'firebase/auth' 
 
 @Component({
   selector: 'app-root',
@@ -6,5 +12,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'organic-shop';
+ constructor(private auth: AuthService, private router: Router){
+  
+  let returnURL = localStorage.getItem('returnUrl');
+  localStorage.removeItem('returnUrl');
+
+  this.auth.user$.pipe(switchMap(fu => this.auth.get(fu)
+        .pipe(map(user => {
+            return { fu, user }
+      })
+    )
+  )
+ ).subscribe(obj => {
+      if(!obj.fu) return;
+      if(!obj.user) this.auth.create(obj.fu);
+      if(returnURL) this.router.navigateByUrl(returnURL);
+    });
+
+ }
 }
