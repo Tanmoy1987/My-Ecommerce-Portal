@@ -1,0 +1,77 @@
+<div class="mainDiv row">
+    <div class="topDiv row">
+        <a class="nav-link"
+           (click)="navigateToPrev(false)"
+           title="Back" 
+           style="color: black; font-size:x-large; cursor: pointer;">
+           <i class="fa fa-long-arrow-left"></i>
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form #productForm="ngForm" (ngSubmit)="saveProduct(productForm.value)">
+            <div class="mb-4">
+                <label for="title">Title</label>
+                <input class="mt-2 form-control" type="text" name="title" [(ngModel)]="product.title" #titleVal="ngModel" placeholder="Product Title..." required>
+                <div *ngIf="titleVal.touched && titleVal.invalid">
+                    <div *ngIf="titleVal.errors?.required">
+                        <span class="alert-message">*Product title required field</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="price">Price</label>
+                <div class="mt-2 input-group">
+                    <span class="input-group-text">$</span>
+                    <input class="form-control" type="text" name="price" [(ngModel)]="product.price" #priceVal="ngModel" placeholder="0.00" required>
+                </div>
+                <div *ngIf="priceVal.touched && priceVal.invalid">
+                    <div *ngIf="priceVal.errors?.required">
+                        <span class="alert-message">*Product price required field</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="category">Category</label>
+                <select  class="mt-2 form-select" name="category" [(ngModel)]="product.category" #categoryVal="ngModel" required>
+                    <option value="selCategory">----select a category----</option>
+                    <option *ngFor="let category of categories$ | async" [value]="category.key">{{category.name}}</option>
+                </select>
+                <div *ngIf="categoryVal.touched && categoryVal.invalid">
+                    <div *ngIf="categoryVal.errors?.required">
+                        <span class="alert-message">*Product category required field</span>
+                    </div>
+                </div>
+                <div *ngIf="categoryVal.touched && categoryVal.value=='selCategory'">
+                    <span class="alert-message">*Please choose a valid category</span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="imageUrl">Image URL</label>
+                <input class="mt-2 form-control" type="text" name="imageUrl" [(ngModel)]="product.imageUrl" #imageUrlVal="ngModel" placeholder="https://...." required>
+                <div *ngIf="imageUrlVal.touched && imageUrlVal.invalid">
+                    <div *ngIf="imageUrlVal.errors?.required">
+                        <span class="alert-message">*Image URL required field</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <input type="submit" value="Save" class="btn btn-primary" [disabled]="!productForm.valid || categoryVal.value=='selCategory'">
+                <input type="button" value="Delete" class="btn btn-danger mx-2" (click)="deleteProduct(product)" [disabled]="!product.key">
+            </div>
+            <div *ngIf="isSubmitted" class="alert alert-success p-1">
+                <span>Product is saved</span>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div style="width: 500px;">
+            <div class="card" *ngIf="product.title">
+                <img [src]="product.imageUrl" style="width: 500px; height: 300px;">
+                <div class="card-body">
+                  <h5 class="card-title">{{product.title}}</h5>
+                  <p class="card-text">{{product.price | currency:'USD'}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

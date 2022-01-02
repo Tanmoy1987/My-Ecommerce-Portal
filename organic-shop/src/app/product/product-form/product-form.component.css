@@ -1,0 +1,29 @@
+.mainDiv {
+    margin-top: 40px;
+ }
+ .topDiv {
+    margin-bottom: 40px;
+    margin-left: -70px; 
+ }
+ .product-card {
+     max-width: fit-content;
+ }
+ .alert-message {
+    color: red;
+    font-size: small;
+    float: right;
+    font-style: italic;
+}
+
+::placeholder{
+    font-size: 1em;
+    font-style: italic;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    font-style: italic;
+  }
+
+.border-highlight {
+    border: 1px solid red;
+}

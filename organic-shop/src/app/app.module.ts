@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
+/** Angular Grid**/
+import { AgGridModule } from 'ag-grid-angular';
+/** Angular Grid**/
 /** Firebase Modules**/
 import { AngularFireModule  } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
@@ -20,11 +24,15 @@ import { MyOrderComponent } from './shopping/my-order/my-order.component';
 import { AdminProductComponent } from './admin/admin-product/admin-product.component';
 import { AdminOrderComponent } from './admin/admin-order/admin-order.component';
 import { OrderSuccessComponent } from './shopping/order-success/order-success.component';
+import { ProductFormComponent } from './product/product-form/product-form.component';
 /** components**/
 /**Services**/
 import { AuthService } from './service/auth.service';
 import { AuthGuard } from './service/auth-guard.service';
 import { AdminAuthGuard } from './service/admin-auth-guard.service';
+import { CategoryService } from './service/category.service';
+import { ProductService } from './service/product.service';
+import { RouterLinkRendererComponent } from './shared/router-link-renderer/router-link-renderer.component';
 
 /**Services**/
 
@@ -40,20 +48,27 @@ import { AdminAuthGuard } from './service/admin-auth-guard.service';
     MyOrderComponent,
     AdminProductComponent,
     AdminOrderComponent,
-    OrderSuccessComponent
+    OrderSuccessComponent,
+    ProductFormComponent,
+    RouterLinkRendererComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    NgbModule
+    NgbModule,
+    AgGridModule.withComponents([])
   ],
   providers: [AuthService,
   AuthGuard,
-  AdminAuthGuard
+  AdminAuthGuard,
+  CategoryService,
+  ProductService
  ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [RouterLinkRendererComponent]
 })
 export class AppModule { }

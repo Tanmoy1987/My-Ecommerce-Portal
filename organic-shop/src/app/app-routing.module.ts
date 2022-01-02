@@ -4,6 +4,7 @@ import { AdminOrderComponent } from './admin/admin-order/admin-order.component';
 import { AdminProductComponent } from './admin/admin-product/admin-product.component';
 import { LoginComponent } from './core/login/login.component';
 import { HomeComponent } from './home/home.component';
+import { ProductFormComponent } from './product/product-form/product-form.component';
 import { ProductComponent } from './product/product/product.component';
 import { AdminAuthGuard } from './service/admin-auth-guard.service';
 import { AuthGuard } from './service/auth-guard.service';
@@ -21,6 +22,8 @@ const routes: Routes = [
   { path: 'my/orders', component: MyOrderComponent, canActivate: [AuthGuard] },
   { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
   { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
+  { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard] },
+  { path: 'admin/products/:key', component: ProductFormComponent, canActivate: [AuthGuard] },
   { path: 'admin/products', component: AdminProductComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/orders', component: AdminOrderComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path:'', pathMatch:'full', redirectTo: 'product' }

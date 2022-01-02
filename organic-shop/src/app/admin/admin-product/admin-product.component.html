@@ -1,1 +1,32 @@
-<p>admin-product works!</p>
+<div class="mainDiv">
+    <div>
+        <a class="btn btn-primary" (click)= "createNew()" >New Product</a>
+    </div>
+    <div class="mt-4">
+        <input #elem class="form-control" (keyup)="onKeyEnter(elem.value)" type="text" placeholder="Search..."/>
+    </div>  
+    <div class="mt-4">
+        <div>
+            <label for="pageSize">Page Size:</label>
+            <select class="m-1" [(ngModel)]="paginationPageSize" id="pageSize" (change)="onPageSizeChange()">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+            </select>
+        </div>
+        <ag-grid-angular
+           #agGrid
+           style="height: 467px;" 
+           class="ag-theme-balham"
+           [rowData]="rowData"
+           [columnDefs]="columnDefs"
+           [defaultColDef]="defaultColDef"
+           [getRowHeight]= "getRowHeight"
+           [frameworkComponents]= "frameworkComponents"
+           [pagination]= "true"
+           [paginationPageSize]="paginationPageSize"
+           (gridReady)="onGridReady($event)">  
+        </ag-grid-angular>
+    </div>
+</div>
+

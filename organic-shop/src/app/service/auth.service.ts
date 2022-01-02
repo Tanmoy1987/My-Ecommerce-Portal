@@ -12,14 +12,13 @@ import { AppUser } from '../model/user';
 })
 export class AuthService {
   user$: Observable<firebase.default.User | null>;
+  appUser$: Observable<AppUser | null>;
 
   constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) { 
       this.user$ = this.afAuth.authState;
+      this.appUser$ = this.user$.pipe(switchMap(user => this.get(user)));
   }
-  get appUser$() {
-    return this.user$.pipe(switchMap(user => this.get(user)));
-  }
-
+  
   login(){
     return this.afAuth.signInWithRedirect(new firebase.default.auth.GoogleAuthProvider());
   }
@@ -31,7 +30,7 @@ export class AuthService {
   get(user: firebase.default.User | null): Observable<AppUser | null> {
       return this.db.object<AppUser | null>('/user/'+ user?.uid).valueChanges();
   }
-  
+
   create(user: firebase.default.User) {
     //this.userListRef.push(user);
     this.db.object('/user/' + user.uid).set({
