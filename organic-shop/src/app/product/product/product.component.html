@@ -1,1 +1,48 @@
-<p>product works!</p>
+<div class="mainDiv">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills sticky-top flex-column" style="cursor: pointer;">
+                <li class="nav-item border-bottom p-1" >
+                    <a class="nav-link" routerLink="/product" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">All Categories</a>
+                </li>
+                <li class="nav-item border-bottom p-1" *ngFor="let category of categories$ | async">
+                    <a class="nav-link" routerLink='/product' [queryParams]="{category: category?.key}" routerLinkActive="active">
+                        {{category?.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col mx-2" *ngIf="products.length > 0">
+            <div class="row mb-2" *ngFor="let index of counter(products.length); let i= index">
+                <div class="col" *ngIf="products[i*2] as p1">
+                    <div style="width: 500px;">
+                        <div class="card">
+                            <img [src]="p1.imageUrl" style="width: 500px; height: 300px;">
+                            <div class="card-body">
+                              <h5 class="card-title">{{p1.title}}</h5>
+                              <p class="card-text">{{p1.price | currency:'USD'}}</p>
+                            </div>
+                            <div class="card-footer p-0 d-grid">
+                                <a role="button" class="btn btn-primary">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" *ngIf="products[i*2 +1] as p2">
+                    <div style="width: 500px;">
+                        <div class="card">
+                            <img [src]="p2.imageUrl" style="width: 500px; height: 300px;">
+                            <div class="card-body">
+                              <h5 class="card-title">{{p2.title}}</h5>
+                              <p class="card-text">{{p2.price | currency:'USD'}}</p>
+                            </div>
+                            <div class="card-footer p-0 d-grid">
+                                <a role="button" class="btn btn-primary">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
