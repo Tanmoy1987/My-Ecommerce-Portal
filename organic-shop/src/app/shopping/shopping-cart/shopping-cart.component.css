@@ -1,0 +1,14 @@
+.mainDiv {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 25px;
+}
+.rounded-image{
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+.table>tbody,tfoot>tr>td,th {
+   vertical-align: middle;
+   text-align: center;
+}

@@ -43,7 +43,7 @@ export class AdminProductComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    this.productService.getAllProducts()
+    this.productService.getProductByCategory(null)
         .subscribe(data => {
           this.productList= data;
           this.gridApi.setRowData(this.prepareGridData(data))

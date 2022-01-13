@@ -25,6 +25,8 @@ import { AdminProductComponent } from './admin/admin-product/admin-product.compo
 import { AdminOrderComponent } from './admin/admin-order/admin-order.component';
 import { OrderSuccessComponent } from './shopping/order-success/order-success.component';
 import { ProductFormComponent } from './product/product-form/product-form.component';
+import { RouterLinkRendererComponent } from './shared/router-link-renderer/router-link-renderer.component';
+import { ProductCardComponent } from './shared/product-card/product-card.component';
 /** components**/
 /**Services**/
 import { AuthService } from './service/auth.service';
@@ -32,7 +34,8 @@ import { AuthGuard } from './service/auth-guard.service';
 import { AdminAuthGuard } from './service/admin-auth-guard.service';
 import { CategoryService } from './service/category.service';
 import { ProductService } from './service/product.service';
-import { RouterLinkRendererComponent } from './shared/router-link-renderer/router-link-renderer.component';
+import { ShoppingCartService } from './service/shopping-cart.service';
+import { ProductQuantityComponent } from './shared/product-quantity/product-quantity.component';
 
 /**Services**/
 
@@ -50,7 +53,9 @@ import { RouterLinkRendererComponent } from './shared/router-link-renderer/route
     AdminOrderComponent,
     OrderSuccessComponent,
     ProductFormComponent,
-    RouterLinkRendererComponent
+    RouterLinkRendererComponent,
+    ProductCardComponent,
+    ProductQuantityComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +71,8 @@ import { RouterLinkRendererComponent } from './shared/router-link-renderer/route
   AuthGuard,
   AdminAuthGuard,
   CategoryService,
-  ProductService
+  ProductService,
+  ShoppingCartService
  ],
   bootstrap: [AppComponent],
   entryComponents: [RouterLinkRendererComponent]

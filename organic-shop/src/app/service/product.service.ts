@@ -11,19 +11,22 @@ export class ProductService {
 
   constructor(private db: AngularFireDatabase) { }
 
-  getAllProducts(): Observable<Product[]> {
+  getProductByCategory(category: string | null): Observable<Product[]> {
     return this.db.list('/product').snapshotChanges()
-               .pipe(map(sn => sn.map(d => {
-                 let p: Product= {
-                   key: d.key,
-                   title: d.payload.child('title').val(),
-                   price: d.payload.child('price').val(),
-                   category: d.payload.child('category').val(),
-                   imageUrl: d.payload.child('imageUrl').val()
-                 }
-                 return p;
-              })
-          ))
+             .pipe(map(sn => sn.map(d => {
+              let p: Product= {
+                key: d.key,
+                title: d.payload.child('title').val(),
+                price: d.payload.child('price').val(),
+                category: d.payload.child('category').val(),
+                imageUrl: d.payload.child('imageUrl').val()
+              }
+              return p;
+      }).filter(d => {
+        if(category == null) return d;
+        return d.category == category;
+      })
+    ))
   }
   getProductByKey(key: string ): Observable<Product> {
     return this.db.object('/product/'+ key).snapshotChanges()
@@ -34,8 +37,8 @@ export class ProductService {
                   price: d.payload.child('price').val(),
                   category: d.payload.child('category').val(),
                   imageUrl: d.payload.child('imageUrl').val()
-              }
-          }));
+          }
+    }));
   }
   async createProduct(product: Product){
     const ref = await this.db.list('/product').push(product);

@@ -1,1 +1,42 @@
-<p>shopping-cart works!</p>
+<div class="mainDiv">
+    <div>
+       <h1>Shopping Cart</h1>
+       <h5>You have {{ cartTotalQuantity$ | async }} items in your shopping cart.</h5>
+    </div>
+    <div class="mt-4">
+        <table class="table">
+            <thead>
+                <th class="col-2"></th>
+                <th class="col-3" style="text-align: left;">Product</th>
+                <th class="col-4">Quantity</th>
+                <th class="col-3">Price</th>
+            </thead>
+            <ng-container *ngIf="cart$ | async as cart">
+                <tbody>
+                    <tr *ngFor="let ct of cart?.items">
+                        <td><img [src]='ct?.imageUrl' class='rounded-image'/></td>
+                        <td style="text-align: left;">
+                            <i>{{ct?.title}}</i>
+                        </td>
+                        <td>
+                            <product-quantity [product]='ct' [quantity]='ct?.quantity' (updateQTy)="updateQuantity($event)"></product-quantity>
+                        </td>
+                        <td>
+                            <i *ngIf="ct.price && ct.quantity">
+                                {{ ct.price * ct.quantity | currency:'USD'}}
+                            </i>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b><i>{{cart?.totalPrice | currency:'USD' }}</i></b></td>
+                    </tr>
+                </tfoot>
+            </ng-container>
+        </table>
+    </div>
+</div>
