@@ -4,7 +4,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 //import * as firebase from 'firebase/auth' 
 import * as firebase from 'firebase/compat/app';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { AppUser } from '../model/user';
 
 @Injectable({
@@ -22,15 +22,12 @@ export class AuthService {
   login(){
     return this.afAuth.signInWithRedirect(new firebase.default.auth.GoogleAuthProvider());
   }
-
   logout(){
     this.afAuth.signOut();
   }
-
   get(user: firebase.default.User | null): Observable<AppUser | null> {
-      return this.db.object<AppUser | null>('/user/'+ user?.uid).valueChanges();
+      return this.db.object<AppUser | null>('/user/'+ user?.uid).valueChanges()
   }
-
   create(user: firebase.default.User) {
     //this.userListRef.push(user);
     this.db.object('/user/' + user.uid).set({

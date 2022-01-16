@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Product } from '../../model/product';
 import { ProductService } from '../../service/product.service';
 import { RouterLinkRendererComponent } from '../../shared/router-link-renderer/router-link-renderer.component';
@@ -9,7 +10,7 @@ import { RouterLinkRendererComponent } from '../../shared/router-link-renderer/r
   templateUrl: './admin-product.component.html',
   styleUrls: ['./admin-product.component.css']
 })
-export class AdminProductComponent implements OnInit {
+export class AdminProductComponent implements OnInit, OnDestroy {
   gridApi: any;
   gridColumnApi: any;
   frameworkComponents: any;
@@ -18,6 +19,7 @@ export class AdminProductComponent implements OnInit {
   columnDefs: any;
   defaultColDef: any;
   productList: Product[] = [];
+  productSubscription?: Subscription;
 
   constructor(private router: Router, private productService: ProductService) {
     this.columnDefs=[
@@ -32,7 +34,7 @@ export class AdminProductComponent implements OnInit {
     this.defaultColDef= { resizable: true, sortable: true };
     this.paginationPageSize= 10;
   }
-
+  
   ngOnInit(): void {
   }
   createNew(){
@@ -43,7 +45,7 @@ export class AdminProductComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    this.productService.getProductByCategory(null)
+    this.productSubscription= this.productService.getProductByCategory(null)
         .subscribe(data => {
           this.productList= data;
           this.gridApi.setRowData(this.prepareGridData(data))
@@ -71,5 +73,8 @@ export class AdminProductComponent implements OnInit {
     let filteredProductList= val != "" && val !== undefined 
         ? this.productList.filter(p => p.title?.toLocaleLowerCase().startsWith(val.toLocaleLowerCase())): this.productList;
     this.gridApi.setRowData(this.prepareGridData(filteredProductList));
+  }
+  ngOnDestroy(){
+    this.productSubscription?.unsubscribe();
   }
 }

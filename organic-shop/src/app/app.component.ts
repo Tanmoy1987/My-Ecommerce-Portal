@@ -12,8 +12,9 @@ import { AuthService } from './service/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+ public static _userKey?: string | null;
  constructor(private auth: AuthService, private router: Router){
-  
+
   let returnURL = localStorage.getItem('returnUrl');
   localStorage.removeItem('returnUrl');
 
@@ -25,6 +26,7 @@ export class AppComponent {
   )
  ).subscribe(obj => {
       if(!obj.fu) return;
+      AppComponent._userKey= obj.fu?.uid;
       if(!obj.user) this.auth.create(obj.fu);
       if(returnURL) this.router.navigateByUrl(returnURL);
     });

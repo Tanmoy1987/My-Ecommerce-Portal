@@ -139,6 +139,19 @@ export class ShoppingCartService {
         .remove();
   }
 
+  clearCart(){
+    this.db
+        .object(`/shopping-cart/${this.getCartId()}`)
+        .update({ totalPrice: 0.00 });
+        
+    this.db
+        .object(`/shopping-cart/${this.getCartId()}/items`).remove();
+  }
+  
+  removeCart(){
+    this.db.object(`/shopping-cart/${this.getCartId()}`).remove();
+    localStorage.removeItem('cartId');
+  }
   calculatePrice(currentPrice?: number| null, unitPrice?: number){
     return (parseFloat((currentPrice== null? 0: currentPrice).toString()) + parseFloat((unitPrice? unitPrice: 0).toString())).toFixed(2);
   }

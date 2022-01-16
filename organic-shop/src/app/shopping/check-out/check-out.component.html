@@ -1,1 +1,80 @@
-<p>check-out works!</p>
+<div class="mainDiv">
+    <h1>Shipping</h1>
+    <div class="row" style="margin-top: 50px;">
+        <ng-container *ngIf="cart$ | async as cart">
+            <div class="col-5">
+                <form #shippingForm="ngForm" (ngSubmit)="saveOrder(shippingForm.value, cart)">
+                    <div class="mb-4">
+                        <label for="name">Name</label>
+                        <input class="mt-2 form-control" type="text" name="name" [(ngModel)]="shipping.name" #nameVal="ngModel" placeholder="Name" required>
+                        <div *ngIf="nameVal.touched && nameVal.invalid">
+                            <div *ngIf="nameVal.errors?.required">
+                                <span class="alert-message">*Name is a required field</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="addressLine1">Address</label>
+                        <input class="mt-2 form-control" type="text" name="addressLine1" [(ngModel)]="shipping.addressLine1" #addressLine1Val="ngModel" placeholder="Line 1" required>
+                        <div *ngIf="addressLine1Val.touched && addressLine1Val.invalid">
+                            <div *ngIf="addressLine1Val.errors?.required">
+                                <span class="alert-message">*Address Line 1 is a required field</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="addressLine2"></label>
+                        <input class="form-control" type="text" name="addressLine2" [(ngModel)]="shipping.addressLine2" #addressLine2Val="ngModel" placeholder="Line 2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="city">City</label>
+                        <input class="mt-2 form-control" type="text" name="city" [(ngModel)]="shipping.city" #cityVal="ngModel" placeholder="City" required>
+                        <div *ngIf="cityVal.touched && cityVal.invalid">
+                            <div *ngIf="cityVal.errors?.required">
+                                <span class="alert-message">*City is a required field</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 60px;">
+                        <input type="submit" value="Place Order" class="btn btn-primary" [disabled]="!shippingForm.valid">
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <div class="card tableBody">
+                    <div class="card-body p-4">
+                        <h5 class="card-title">Order Summary</h5>
+                        <p class="card-text mt-2">You have {{getCartTotalQuantity(cart)}} items in your shopping cart.</p>
+                        <div class="mt-4">
+                            <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let ct of cart?.items">
+                                        <td class="col">
+                                            {{ct?.quantity}} X {{ct?.title}}
+                                        </td>
+                                        <td class="col-2">
+                                            <span *ngIf="ct.price && ct.quantity">
+                                                {{ ct.price * ct.quantity | currency:'USD'}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            Total
+                                        </td>
+                                        <td>
+                                            <span>{{cart?.totalPrice | currency:'USD' }}</span>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+

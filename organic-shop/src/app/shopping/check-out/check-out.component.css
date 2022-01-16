@@ -1,0 +1,23 @@
+.mainDiv {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 25px;
+}
+.tableBody {
+    max-height: 400px;
+    overflow-y: scroll;
+    width: 600px;
+    float: right;
+}
+.alert-message {
+    color: red;
+    font-size: small;
+    float: right;
+    font-style: italic;
+}
+::placeholder{
+    font-size: 1em;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    font-style: italic;
+}
