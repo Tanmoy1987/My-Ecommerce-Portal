@@ -1,14 +1,21 @@
 <div class="mainDiv">
     <div>
        <h1>Shopping Cart</h1>
-       <div class="row">
-           <div class="col-4">
-              <h5>You have {{ cartTotalQuantity$ | async }} items in your shopping cart.</h5>
+       <ng-container *ngIf="cartTotalQuantity$ | async as totalQTY; else otherDiv">
+         <div class="row">
+            <div class="col-4">
+                <h5>You have {{ totalQTY }} items in your shopping cart.</h5>
+             </div>
+            <div class="col">
+               <button class="btn btn-light" (click)="clearCart()">Clear Cart</button>
+            </div>
+         </div>
+       </ng-container>
+       <ng-template #otherDiv>
+           <div class="row">
+              <h5>You have 0 items in your shopping cart.</h5>
            </div>
-           <div class="col">
-             <button class="btn btn-light" (click)="clearCart()">Clear Cart</button>
-           </div>
-       </div>
+       </ng-template>  
     </div>
     <ng-container *ngIf="cart$ | async as cart">
         <div class="mt-4">
